@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KB Peptides — Order Form</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a0a0a; }
+    select option { background: #0a0f18; color: #e8edf2; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #1a3a6a; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+const { useState } = React;
+
+const LOGO = "data:image/jpeg;base64,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";
+
+const PRODUCTS = [
+  { id: "tirzepatide", name: "Tirzepatide", category: "weight-loss", sizes: ["5mg","10mg","15mg","20mg","30mg","40mg","45mg","50mg","60mg"] },
+  { id: "semaglutide", name: "Semaglutide", category: "weight-loss", sizes: ["5mg","10mg","15mg","20mg","30mg"] },
+  { id: "retatrutide", name: "Retatrutide", category: "weight-loss", sizes: ["5mg","10mg","15mg","20mg","30mg","40mg","50mg"] },
+  { id: "suruvodutide", name: "Suruvodutide", category: "weight-loss", sizes: ["10mg"] },
+  { id: "aod9604", name: "AOD9604", category: "weight-loss", sizes: ["5mg","10mg"] },
+  { id: "glp1", name: "GLP-1", category: "weight-loss", sizes: ["5mg"] },
+  { id: "mazdutide", name: "Mazdutide", category: "weight-loss", sizes: ["5mg","10mg"] },
+  { id: "cagrilintide", name: "Cagrilintide", category: "weight-loss", sizes: ["5mg","10mg"] },
+  { id: "cagri-sema", name: "Cagrilintide + Semaglutide", category: "weight-loss", sizes: ["5mg"] },
+  { id: "hgh", name: "HGH 191AA (Somatropin)", category: "gh", sizes: ["10IU","15IU","24IU"] },
+  { id: "hgh-frag", name: "HGH Fragment 176-191", category: "gh", sizes: ["5mg"] },
+  { id: "igf1lr3", name: "IGF-1LR3", category: "gh", sizes: ["0.1mg","1mg"] },
+  { id: "igf-des", name: "IGF-DES", category: "gh", sizes: ["2mg"] },
+  { id: "ghrp2", name: "GHRP-2 Acetate", category: "gh", sizes: ["5mg","10mg"] },
+  { id: "ghrp6", name: "GHRP-6 Acetate", category: "gh", sizes: ["5mg","10mg"] },
+  { id: "ipamorelin", name: "Ipamorelin", category: "gh", sizes: ["5mg","10mg"] },
+  { id: "sermorelin", name: "Sermorelin Acetate", category: "gh", sizes: ["5mg","10mg"] },
+  { id: "tesamorelin", name: "Tesamorelin", category: "gh", sizes: ["5mg","10mg","20mg"] },
+  { id: "gonadorelin", name: "Gonadorelin Acetate", category: "gh", sizes: ["5mg","10mg"] },
+  { id: "cjc-no-dac", name: "CJC-1295 Without DAC", category: "gh", sizes: ["5mg","10mg"] },
+  { id: "cjc-no-dac-ipa", name: "CJC-1295 Without DAC + IPA", category: "gh", sizes: ["10mg"] },
+  { id: "cjc-dac", name: "CJC-1295 With DAC", category: "gh", sizes: ["5mg"] },
+  { id: "peg-mgf", name: "PEG MGF", category: "gh", sizes: ["2mg"] },
+  { id: "mots-c", name: "MOTS-c", category: "gh", sizes: ["10mg","40mg"] },
+  { id: "bpc157", name: "BPC-157", category: "recovery", sizes: ["5mg","10mg"] },
+  { id: "tb500", name: "TB500 (Thymosin B4 Acetate)", category: "recovery", sizes: ["5mg","10mg"] },
+  { id: "bpc-tb500", name: "BPC-157 + TB500", category: "recovery", sizes: ["10mg","20mg"] },
+  { id: "glow", name: "BPC + GHK-Cu + TB500 (GLOW)", category: "recovery", sizes: ["70mg"] },
+  { id: "kpv", name: "Lysine-Proline-Valine (KPV)", category: "recovery", sizes: ["5mg","10mg"] },
+  { id: "aicar", name: "AICAR", category: "recovery", sizes: ["50mg"] },
+  { id: "ace031", name: "ACE-031", category: "recovery", sizes: ["1mg"] },
+  { id: "ss31", name: "SS-31", category: "recovery", sizes: ["10mg","50mg"] },
+  { id: "foxo4", name: "FOXO4", category: "recovery", sizes: ["10mg"] },
+  { id: "selank", name: "Selank", category: "cognitive", sizes: ["5mg","10mg"] },
+  { id: "semax", name: "Semax", category: "cognitive", sizes: ["5mg","10mg"] },
+  { id: "nad", name: "NAD+", category: "cognitive", sizes: ["100IU","500IU","1000IU"] },
+  { id: "5amino", name: "5-Amino-1MQ", category: "cognitive", sizes: ["5mg"] },
+  { id: "cerebrolysin", name: "Cerebrolysin", category: "cognitive", sizes: ["60mg"] },
+  { id: "pinealon", name: "Pinealon", category: "cognitive", sizes: ["5mg","10mg","20mg"] },
+  { id: "slu322", name: "SLU-PP-322", category: "cognitive", sizes: ["5mg"] },
+  { id: "ll37", name: "LL37", category: "cognitive", sizes: ["5mg"] },
+  { id: "thymosin-a1", name: "Thymosin Alpha-1", category: "immune", sizes: ["5mg","10mg"] },
+  { id: "thymalin", name: "Thymalin", category: "immune", sizes: ["10mg"] },
+  { id: "epithalon", name: "Epithalon", category: "immune", sizes: ["10mg","50mg"] },
+  { id: "melatonin", name: "Melatonin", category: "immune", sizes: ["10mg"] },
+  { id: "ara290", name: "Ara-290", category: "immune", sizes: ["10mg"] },
+  { id: "epo", name: "EPO", category: "immune", sizes: ["3000IU","5000IU"] },
+  { id: "gdf8", name: "GDF-8", category: "immune", sizes: ["1mg"] },
+  { id: "follistatin", name: "Follistatin", category: "immune", sizes: ["1mg"] },
+  { id: "pt141", name: "PT-141", category: "sexual", sizes: ["10mg"] },
+  { id: "kisspeptin", name: "KissPeptin-10", category: "sexual", sizes: ["5mg","10mg"] },
+  { id: "oxytocin", name: "Oxytocin Acetate", category: "sexual", sizes: ["2mg","5mg"] },
+  { id: "mt1", name: "MT-1", category: "sexual", sizes: ["10mg"] },
+  { id: "mt2", name: "MT-2 (Melanotan 2 Acetate)", category: "sexual", sizes: ["10mg"] },
+  { id: "triptorelin", name: "Triptorelin Acetate / GnRH", category: "sexual", sizes: ["2mg"] },
+  { id: "hcg", name: "HCG", category: "sexual", sizes: ["5000IU","10000IU"] },
+  { id: "hmg", name: "HMG", category: "sexual", sizes: ["75IU"] },
+  { id: "insulin", name: "Insulin", category: "sexual", sizes: ["3ml"] },
+  { id: "pnc27", name: "PNC-27", category: "sexual", sizes: ["5mg","10mg"] },
+  { id: "ghk-cu", name: "GHK-CU", category: "skin", sizes: ["50mg","100mg"] },
+  { id: "klow", name: "GHK-CU + BPC + TB500 + KPV (KLOW)", category: "skin", sizes: ["80mg"] },
+  { id: "vip", name: "VIP", category: "skin", sizes: ["5mg","10mg"] },
+  { id: "hyaluronic", name: "Hyaluronic Acid", category: "skin", sizes: ["5mg"] },
+  { id: "snap8", name: "Snap-8", category: "skin", sizes: ["10mg"] },
+  { id: "lemon-bottle", name: "Lemon Bottle", category: "skin", sizes: ["10mg"] },
+  { id: "b12", name: "Vitamin B12", category: "skin", sizes: ["10mg"] },
+  { id: "glutathione", name: "Glutathione", category: "skin", sizes: ["1500mg"] },
+  { id: "dermorphin", name: "Dermorphin", category: "skin", sizes: ["5mg"] },
+  { id: "bac-water", name: "BAC Water", category: "accessories", sizes: ["3ml","10ml"], noVial: true },
+  { id: "pen-kit", name: "Refillable Pen Kit", category: "accessories", sizes: ["Standard","Deluxe"], noVial: true },
+  { id: "dsip", name: "DSIP", category: "accessories", sizes: ["5mg","15mg"] },
+  { id: "hexarelin", name: "Hexarelin Acetate", category: "accessories", sizes: ["5mg"] },
+  { id: "l-carnitine", name: "L-Carnitine", category: "accessories", sizes: ["LC120 10mg","LC216 10mg","LC600 10mg"] },
+];
+
+const CATEGORIES = [
+  { id: "weight-loss", label: "Weight Loss & Metabolic", icon: "⚡" },
+  { id: "gh", label: "Growth Hormone & IGF", icon: "📈" },
+  { id: "recovery", label: "Recovery & Repair", icon: "🔧" },
+  { id: "cognitive", label: "Cognitive & Neurological", icon: "🧠" },
+  { id: "immune", label: "Immune & Anti-Ageing", icon: "🛡️" },
+  { id: "sexual", label: "Sexual Health & Hormonal", icon: "❤️" },
+  { id: "skin", label: "Skin, Beauty & Collagen", icon: "✨" },
+  { id: "accessories", label: "Accessories & Support", icon: "🧪" },
+];
+
+const WHATSAPP_NUMBER = "447903025733";
+const PIN = "1234";
+
+function App() {
+  const [avail, setAvail] = useState(() => Object.fromEntries(PRODUCTS.map(p => [p.id, "in_stock"])));
+  const [sizes, setSizes] = useState(() => Object.fromEntries(PRODUCTS.map(p => [p.id, p.sizes[0]])));
+  const [basket, setBasket] = useState([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [pin, setPin] = useState("");
+  const [unlocked, setUnlocked] = useState(false);
+
+  const addToBasket = (p) => {
+    const size = sizes[p.id];
+    const key = p.id + "_" + size;
+    setBasket(prev => {
+      const ex = prev.find(i => i.key === key);
+      if (ex) return prev.map(i => i.key === key ? {...i, qty: i.qty+1} : i);
+      return [...prev, {key, id:p.id, name:p.name, size, avail:avail[p.id], noVial:p.noVial, qty:1}];
+    });
+  };
+
+  const removeItem = (key) => setBasket(prev => prev.filter(i => i.key !== key));
+  const updateQty = (key, d) => setBasket(prev => prev.map(i => i.key === key ? {...i, qty:Math.max(1,i.qty+d)} : i));
+  const totalItems = basket.reduce((s,i) => s+i.qty, 0);
+
+  const sendWhatsApp = () => {
+    const lines = basket.map(i => `• ${i.name} — ${i.size}${!i.noVial?" / vial":""} x${i.qty} (${i.avail==="in_stock"?"In Stock":"To Order"})`);
+    const msg = ["🧪 *KB Peptides Order*","", ...lines, "", `*Total items: ${totalItems}*`].join("
+");
+    window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(msg), "_blank");
+  };
+
+  const c = {
+    bg:"#0a0a0a", card:"#111820", border:"#1c2a3a", borderOn:"#1a6fd4",
+    blue:"#1a8aff", blueDark:"#1a6fd4", text:"#e8edf2", muted:"#9aaab8", dim:"#607080",
+    green:"#00c46a", amber:"#ffaa00",
+  };
+
+  const availBadge = (a) => ({
+    alignSelf:"flex-start", padding:"2px 8px", borderRadius:"3px",
+    fontSize:"9px", fontWeight:"700", letterSpacing:"0.5px", textTransform:"uppercase",
+    background: a==="in_stock"?"rgba(0,180,100,0.15)":"rgba(255,160,0,0.12)",
+    color: a==="in_stock"?c.green:c.amber,
+    border: a==="in_stock"?"1px solid rgba(0,180,100,0.3)":"1px solid rgba(255,160,0,0.3)",
+  });
+
+  return (
+    <div style={{minHeight:"100vh", background:c.bg, color:c.text, fontFamily:"Arial,sans-serif"}}>
+
+      {/* Header */}
+      <div style={{background:"#000", borderBottom:"1px solid #1a3a6a", paddingBottom:"10px"}}>
+        <img src={LOGO} alt="KB Peptides" style={{display:"block", margin:"0 auto", width:"240px"}} />
+        <div style={{textAlign:"center", fontSize:"10px", color:c.dim, letterSpacing:"3px", textTransform:"uppercase"}}>Product Order Form</div>
+      </div>
+
+      {/* Disclaimer */}
+      <div style={{background:"#0d1520", borderBottom:"1px solid #1a3a6a", padding:"9px 16px", textAlign:"center", fontSize:"11px", color:"#8aabcc", fontStyle:"italic"}}>
+        ⚠️ <strong style={{color:c.blue}}>Please Note:</strong> All products are for <strong style={{color:c.text}}>research purposes only</strong> and are not intended for human consumption.
+      </div>
+
+      {/* Delivery banner */}
+      <div style={{background:"#0a1020", borderBottom:"1px solid #1a3a6a", padding:"8px 16px", display:"flex", justifyContent:"center", gap:"24px", flexWrap:"wrap"}}>
+        <span style={{fontSize:"11px", color:c.green}}>🚚 <strong>In Stock:</strong> Delivery 1–3 days</span>
+        <span style={{fontSize:"11px", color:c.amber}}>⏱ <strong>To Order:</strong> Up to 14 days to arrive</span>
+      </div>
+
+      {/* Products */}
+      <div style={{maxWidth:"960px", margin:"0 auto", padding:"24px 16px 120px"}}>
+        {CATEGORIES.map(cat => {
+          const products = PRODUCTS.filter(p => p.category===cat.id);
+          return (
+            <div key={cat.id} style={{marginBottom:"32px"}}>
+              <div style={{display:"flex", alignItems:"center", gap:"10px", marginBottom:"14px", paddingBottom:"10px", borderBottom:"1px solid #1a3a6a"}}>
+                <span style={{fontSize:"18px"}}>{cat.icon}</span>
+                <h2 style={{margin:0, fontSize:"12px", fontWeight:"700", letterSpacing:"3px", textTransform:"uppercase", color:c.blue}}>{cat.label}</h2>
+                <div style={{flex:1, height:"1px", background:"linear-gradient(to right,#1a3a6a,transparent)"}} />
+              </div>
+              <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))", gap:"10px"}}>
+                {products.map(p => {
+                  const a = avail[p.id];
+                  const inB = basket.some(i => i.id===p.id);
+                  return (
+                    <div key={p.id} style={{background:inB?"linear-gradient(135deg,#0d2a5a,#0a1e3f)":c.card, border:`1px solid ${inB?c.borderOn:c.border}`, borderRadius:"8px", padding:"12px", display:"flex", flexDirection:"column", gap:"5px"}}>
+                      <div style={{fontSize:"12px", color:inB?c.text:c.muted, fontWeight:"700", lineHeight:"1.3"}}>{p.name}</div>
+                      {p.sizes.length > 1 ? (
+                        <select value={sizes[p.id]} onChange={e => setSizes(prev=>({...prev,[p.id]:e.target.value}))}
+                          style={{background:"#0a0f18", border:"1px solid #1a3a6a", borderRadius:"4px", color:c.blue, fontSize:"11px", fontWeight:"700", padding:"4px 6px", cursor:"pointer", outline:"none"}}>
+                          {p.sizes.map(s => <option key={s} value={s}>{s}{!p.noVial?" / vial":""}</option>)}
+                        </select>
+                      ) : (
+                        <div style={{fontSize:"11px", color:c.blueDark, fontWeight:"700"}}>
+                          {p.sizes[0]}{!p.noVial && <span style={{fontWeight:400, color:"#2a4060", fontSize:"10px"}}> / vial</span>}
+                        </div>
+                      )}
+                      <div style={availBadge(a)}>{a==="in_stock"?"✦ In Stock":"⏱ To Order"}</div>
+                      <button onClick={()=>addToBasket(p)} style={{marginTop:"4px", border:"none", borderRadius:"5px", padding:"7px 0", color:"#fff", fontSize:"10px", fontWeight:"700", letterSpacing:"1px", textTransform:"uppercase", cursor:"pointer", width:"100%", background:inB?"linear-gradient(135deg,#0a4a1a,#0d8a30)":"linear-gradient(135deg,#0d3a7a,#1a6fd4)"}}>
+                        {inB ? "✓ In Basket" : "+ Add to Basket"}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* FAB basket */}
+      <button onClick={()=>setDrawerOpen(true)} style={{position:"fixed", bottom:"24px", right:"24px", width:"60px", height:"60px", background:"linear-gradient(135deg,#0d3a7a,#1a6fd4)", border:"2px solid #2a7ae4", borderRadius:"50%", cursor:"pointer", boxShadow:"0 4px 20px rgba(26,111,212,0.55)", zIndex:900, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"24px"}}>
+        🛒
+        {totalItems > 0 && <div style={{position:"absolute", top:"-4px", right:"-4px", background:c.green, color:"#fff", borderRadius:"50%", width:"20px", height:"20px", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"11px", fontWeight:"700"}}>{totalItems}</div>}
+      </button>
+
+      {/* FAB admin */}
+      <button onClick={()=>setAdminOpen(true)} style={{position:"fixed", bottom:"24px", left:"24px", width:"60px", height:"60px", background:"#111820", border:"2px solid #1a3a6a", borderRadius:"50%", cursor:"pointer", zIndex:900, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"22px"}}>⚙️</button>
+
+      {/* Admin panel */}
+      {adminOpen && (
+        <div style={{position:"fixed", inset:0, zIndex:1000}}>
+          <div onClick={()=>{setAdminOpen(false);setUnlocked(false);setPin("");}} style={{position:"absolute", inset:0, background:"rgba(0,0,0,0.7)"}} />
+          <div style={{position:"absolute", top:0, left:0, bottom:0, width:"340px", background:"#0d1520", borderRight:"1px solid #1a3a6a", display:"flex", flexDirection:"column", boxShadow:"6px 0 30px rgba(0,0,0,0.7)"}}>
+            <div style={{padding:"16px 20px", borderBottom:"1px solid #1a3a6a", background:"#0a0f18", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+              <span style={{color:c.blue, fontWeight:"700", fontSize:"13px", letterSpacing:"2px", textTransform:"uppercase"}}>⚙️ Stock Manager</span>
+              <button onClick={()=>{setAdminOpen(false);setUnlocked(false);setPin("");}} style={{background:"none", border:"none", color:c.dim, fontSize:"22px", cursor:"pointer"}}>✕</button>
+            </div>
+            {!unlocked ? (
+              <div style={{padding:"40px 24px", display:"flex", flexDirection:"column", alignItems:"center", gap:"16px"}}>
+                <div style={{fontSize:"13px", color:c.muted, letterSpacing:"1px"}}>Enter PIN to manage stock</div>
+                <input type="password" value={pin} onChange={e=>setPin(e.target.value)}
+                  placeholder="PIN"
+                  style={{width:"100%", background:"#0a0f18", border:"1px solid #1a3a6a", borderRadius:"6px", padding:"10px 14px", color:c.text, fontSize:"18px", letterSpacing:"6px", textAlign:"center", outline:"none", boxSizing:"border-box"}} />
+                <button onClick={()=>{ if(pin===PIN) setUnlocked(true); else setPin(""); }}
+                  style={{width:"100%", padding:"11px", background:"linear-gradient(135deg,#0d3a7a,#1a6fd4)", border:"none", borderRadius:"6px", color:"#fff", fontWeight:"700", fontSize:"13px", cursor:"pointer", letterSpacing:"2px"}}>
+                  UNLOCK
+                </button>
+              </div>
+            ) : (
+              <div style={{flex:1, overflowY:"auto", padding:"12px 16px"}}>
+                <div style={{fontSize:"11px", color:c.dim, letterSpacing:"1px", marginBottom:"12px", textTransform:"uppercase"}}>Tap to toggle availability</div>
+                {CATEGORIES.map(cat => (
+                  <div key={cat.id} style={{marginBottom:"20px"}}>
+                    <div style={{fontSize:"10px", color:c.blue, letterSpacing:"2px", textTransform:"uppercase", marginBottom:"8px", fontWeight:"700"}}>{cat.icon} {cat.label}</div>
+                    {PRODUCTS.filter(p=>p.category===cat.id).map(p => (
+                      <div key={p.id} onClick={()=>setAvail(prev=>({...prev,[p.id]:prev[p.id]==="in_stock"?"order":"in_stock"}))}
+                        style={{display:"flex", justifyContent:"space-between", alignItems:"center", padding:"9px 12px", marginBottom:"6px", borderRadius:"6px", background:c.card, border:`1px solid ${avail[p.id]==="in_stock"?"rgba(0,180,100,0.3)":"rgba(255,160,0,0.3)"}`, cursor:"pointer"}}>
+                        <span style={{fontSize:"12px", color:c.text, fontWeight:"600"}}>{p.name}</span>
+                        <div style={{padding:"3px 10px", borderRadius:"3px", fontSize:"9px", fontWeight:"700", textTransform:"uppercase",
+                          background:avail[p.id]==="in_stock"?"rgba(0,180,100,0.15)":"rgba(255,160,0,0.12)",
+                          color:avail[p.id]==="in_stock"?c.green:c.amber,
+                          border:avail[p.id]==="in_stock"?"1px solid rgba(0,180,100,0.3)":"1px solid rgba(255,160,0,0.3)"}}>
+                          {avail[p.id]==="in_stock"?"In Stock":"To Order"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Basket drawer */}
+      {drawerOpen && (
+        <div style={{position:"fixed", inset:0, zIndex:1000}}>
+          <div onClick={()=>setDrawerOpen(false)} style={{position:"absolute", inset:0, background:"rgba(0,0,0,0.6)"}} />
+          <div style={{position:"absolute", top:0, right:0, bottom:0, width:"340px", background:"#0d1520", borderLeft:"1px solid #1a3a6a", display:"flex", flexDirection:"column", boxShadow:"-6px 0 30px rgba(0,0,0,0.7)"}}>
+            <div style={{padding:"16px 20px", borderBottom:"1px solid #1a3a6a", background:"#0a0f18", display:"flex", justifyContent:"space-between", alignItems:"center"}}>
+              <span style={{color:c.blue, fontWeight:"700", fontSize:"13px", letterSpacing:"2px", textTransform:"uppercase"}}>
+                🛒 Basket{totalItems>0 && <span style={{background:c.blueDark, borderRadius:"10px", padding:"1px 8px", fontSize:"11px", marginLeft:"8px"}}>{totalItems}</span>}
+              </span>
+              <button onClick={()=>setDrawerOpen(false)} style={{background:"none", border:"none", color:c.dim, fontSize:"22px", cursor:"pointer"}}>✕</button>
+            </div>
+            <div style={{flex:1, overflowY:"auto", padding:"14px 16px"}}>
+              {basket.length===0 ? (
+                <div style={{textAlign:"center", color:"#3a5a7a", marginTop:"80px"}}>
+                  <div style={{fontSize:"40px", marginBottom:"12px"}}>🛒</div>
+                  <div style={{fontSize:"13px"}}>Your basket is empty</div>
+                </div>
+              ) : basket.map(item => (
+                <div key={item.key} style={{background:c.card, border:"1px solid #1a2a3a", borderRadius:"8px", padding:"12px", marginBottom:"10px"}}>
+                  <div style={{display:"flex", justifyContent:"space-between", alignItems:"flex-start"}}>
+                    <div style={{flex:1}}>
+                      <div style={{color:c.text, fontSize:"13px", fontWeight:"600", lineHeight:"1.3"}}>{item.name}</div>
+                      <div style={{color:c.blue, fontSize:"11px", marginTop:"2px", fontWeight:"700"}}>{item.size}{!item.noVial?" / vial":""}</div>
+                      <div style={{...availBadge(item.avail), marginTop:"5px"}}>{item.avail==="in_stock"?"✦ In Stock · 1–3 days":"⏱ To Order · Up to 14 days"}</div>
+                    </div>
+                    <button onClick={()=>removeItem(item.key)} style={{background:"none", border:"none", color:"#3a5a7a", fontSize:"18px", cursor:"pointer", paddingLeft:"8px"}}>✕</button>
+                  </div>
+                  <div style={{display:"flex", alignItems:"center", gap:"12px", marginTop:"10px"}}>
+                    <button onClick={()=>updateQty(item.key,-1)} style={{width:"28px", height:"28px", background:"#1a2a3a", border:"1px solid #2a3a4a", borderRadius:"5px", color:c.muted, fontWeight:"700", fontSize:"16px", cursor:"pointer"}}>−</button>
+                    <span style={{color:c.text, fontWeight:"700", fontSize:"14px", minWidth:"24px", textAlign:"center"}}>{item.qty}</span>
+                    <button onClick={()=>updateQty(item.key,1)} style={{width:"28px", height:"28px", background:"#1a2a3a", border:"1px solid #2a3a4a", borderRadius:"5px", color:c.muted, fontWeight:"700", fontSize:"16px", cursor:"pointer"}}>+</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {basket.length>0 && (
+              <div style={{padding:"16px", borderTop:"1px solid #1a3a6a", background:"#0a0f18"}}>
+                <div style={{color:c.dim, fontSize:"11px", letterSpacing:"1px", marginBottom:"12px"}}>
+                  TOTAL ITEMS: <span style={{color:c.blue, fontWeight:"700", fontSize:"14px"}}>{totalItems}</span>
+                </div>
+                <button onClick={sendWhatsApp} style={{width:"100%", padding:"13px", background:"linear-gradient(135deg,#075e54,#25d366)", border:"none", borderRadius:"7px", color:"#fff", fontWeight:"700", fontSize:"13px", letterSpacing:"2px", textTransform:"uppercase", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", gap:"8px"}}>
+                  <span style={{fontSize:"18px"}}>💬</span> Send via WhatsApp
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
